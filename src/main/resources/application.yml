@@ -1,0 +1,6 @@
+configuration:
+  swagger:
+    app: 'Hotel Management System'
+    description: 'Hotel Management System for Hotel Reservation'
+    developer: 'Tijana Burazorovic'
+    email: 'tijana.burazorovic@stu.ibu.edu.ba'

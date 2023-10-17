@@ -24,7 +24,7 @@ public class UserRepository {
         return users;
     }
 
-    private User findById(int id){
+    public User findById(int id){
         return users.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
     }
 
