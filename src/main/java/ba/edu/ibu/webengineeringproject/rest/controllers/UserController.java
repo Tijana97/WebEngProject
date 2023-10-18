@@ -25,4 +25,9 @@ public class UserController {
     public User findById(@PathVariable int id){
         return userService.findById(id);
     }
+
+    @GetMapping("/send-to-all")
+    public String sendEmailToAllUsers(@RequestParam String message) {
+        return userService.sendEmailToAllUsers(message);
+    }
 }
