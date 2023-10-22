@@ -1,11 +1,8 @@
-package ba.edu.ibu.webengineeringproject.core.model;
+package ba.edu.ibu.webengineeringproject.rest.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import ba.edu.ibu.webengineeringproject.core.model.Room;
 
-@Document
-public class Room {
-    @Id
+public class RoomDTO {
     private String id;
 
     private String hotelId;
@@ -14,6 +11,17 @@ public class Room {
 
     private int capacity;
     private String description;
+
+    private HotelDTO hotelDTO;
+
+    public RoomDTO(Room room, HotelDTO hotelDTO){
+        this.id = room.getId();
+        this.hotelId = room.getHotelId();
+        this.price = room.getPrice();
+        this.description = room.getDescription();
+        this.capacity = room.getCapacity();
+        this.hotelDTO = hotelDTO;
+    }
 
     public String getId() {
         return id;
@@ -53,5 +61,13 @@ public class Room {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public HotelDTO getHotelDTO() {
+        return hotelDTO;
+    }
+
+    public void setHotelDTO(HotelDTO hotelDTO) {
+        this.hotelDTO = hotelDTO;
     }
 }

@@ -1,31 +1,34 @@
 package ba.edu.ibu.webengineeringproject.core.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Hotel {
-    private final int id;
 
-    private final int ownerId;
-
+    @Id
+    private String id;
+    private String ownerId;
     private String name;
     private String city;
     private String country;
     private String emailAddress;
     private String phoneNumber;
 
-    public Hotel(int id, int ownerId, String name, String city, String country, String emailAddress, String phoneNumber) {
+
+    public void setId(String id) {
         this.id = id;
-        this.ownerId = ownerId;
-        this.name = name;
-        this.city = city;
-        this.country = country;
-        this.emailAddress = emailAddress;
-        this.phoneNumber = phoneNumber;
     }
 
-    public int getId() {
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public int getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 

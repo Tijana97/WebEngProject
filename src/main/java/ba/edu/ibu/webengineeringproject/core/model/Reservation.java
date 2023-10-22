@@ -1,37 +1,46 @@
 package ba.edu.ibu.webengineeringproject.core.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
+@Document
 public class Reservation {
 
-    private final int id;
+    @Id
+    private String id;
 
-    private final int roomId;
+    private String roomId;
 
-    private final int userId;
+    private String userId;
 
     private Date dateFrom;
 
     private Date dateTo;
 
-    public Reservation(int id, int roomId, int userId, Date dateFrom, Date dateTo) {
-        this.id = id;
-        this.roomId = roomId;
-        this.userId = userId;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public int getRoomId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getRoomId() {
         return roomId;
     }
 
-    public int getUserId() {
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
+
+    public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Date getDateFrom() {
