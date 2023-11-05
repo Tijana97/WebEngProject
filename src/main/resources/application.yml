@@ -4,3 +4,9 @@ configuration:
     description: 'Hotel Management System for Hotel Reservation'
     developer: 'Tijana Burazorovic'
     email: 'tijana.burazorovic@stu.ibu.edu.ba'
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://tijanaburazorovic:HotelDB123@cluster0.zohjd42.mongodb.net/?retryWrites=true&w=majority
+      database: cluster0
