@@ -10,3 +10,11 @@ spring:
     mongodb:
       uri: mongodb+srv://tijanaburazorovic:HotelDB123@cluster0.zohjd42.mongodb.net/?retryWrites=true&w=majority
       database: cluster0
+
+security:
+  jwt:
+    secret: 'MyWebEngineeringSecret12hdv5d25dgfjzrw46hd56dbvnd546d'
+
+management:
+  security:
+    enabled: false

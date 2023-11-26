@@ -5,6 +5,7 @@ import ba.edu.ibu.webengineeringproject.core.model.enums.UserType;
 
 public class UserDTO {
     private String id;
+    private String username;
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -18,6 +19,7 @@ public class UserDTO {
         this.emailAddress = user.getEmailAddress();
         this.userType = user.getUserType();
         this.isAuthorized = user.isAuthorized();
+        this.username =  user.getUsername();
     }
 
     public String getId() {
@@ -66,5 +68,13 @@ public class UserDTO {
 
     public void setAuthorized(boolean authorized) {
         isAuthorized = authorized;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

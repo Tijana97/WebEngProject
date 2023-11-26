@@ -7,6 +7,9 @@ import ba.edu.ibu.webengineeringproject.core.model.User;
 import ba.edu.ibu.webengineeringproject.core.repository.UserRepository;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +36,12 @@ public class UserService {
 
     public UserDTO addUser(User payload) {
         Optional<User> userExists = userRepository.findFirstByEmailAddress(payload.getEmailAddress());
+        Optional<User> usernameExists = userRepository.findFirstByUsername(payload.getUsername());
         if(userExists.isPresent()){
             throw new UserAlreadyExistsException("User with the provided email already exists");
+        }
+        if(usernameExists.isPresent()){
+            throw new UserAlreadyExistsException("Username already taken.");
         }
         User user = userRepository.save(payload);
         return new UserDTO(user);
@@ -54,8 +61,12 @@ public class UserService {
             throw new ResourceNotFoundException("The user with the given ID does not exist.");
         }
         Optional<User> emailExists = userRepository.findFirstByEmailAddress(payload.getEmailAddress());
+        Optional<User> usernameExists = userRepository.findFirstByUsername(payload.getUsername());
         if(emailExists.isPresent() && !(emailExists.get().getId().equals(payload.getId()))){
             throw new UserAlreadyExistsException("User with the provided email already exists");
+        }
+        if(usernameExists.isPresent() && !(usernameExists.get().getId().equals(payload.getId()))){
+            throw new UserAlreadyExistsException("Username already taken.");
         }
         User updatedUser = payload;
         updatedUser.setId(user.get().getId());
@@ -67,5 +78,25 @@ public class UserService {
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(userRepository::delete);
     }
+
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                Optional<User> user = userRepository.findFirstByUsername(username);
+                if(user.isPresent()){
+                    return user.get();
+                } else {
+                    Optional<User> user2 = userRepository.findFirstByEmailAddress(username);
+                    if(user2.isPresent()){
+                        return  user2.get();
+                    } else{
+                        throw  new UsernameNotFoundException("User not found.");
+                    }
+                }
+            }
+        };
+    }
+
 
 }
