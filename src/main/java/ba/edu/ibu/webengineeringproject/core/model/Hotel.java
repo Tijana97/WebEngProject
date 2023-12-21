@@ -15,6 +15,18 @@ public class Hotel {
     private String emailAddress;
     private String phoneNumber;
 
+    public Hotel() {}
+
+    public Hotel(String id, String ownerId, String name, String city, String country, String emailAddress, String phoneNumber) {
+        this.id = id;
+        this.ownerId = ownerId;
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+    }
+
 
     public void setId(String id) {
         this.id = id;

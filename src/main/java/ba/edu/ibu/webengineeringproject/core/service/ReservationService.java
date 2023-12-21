@@ -12,9 +12,13 @@ import ba.edu.ibu.webengineeringproject.core.repository.UserRepository;
 import ba.edu.ibu.webengineeringproject.rest.dto.ReservationDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.RoomDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserDTO;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +63,71 @@ public class ReservationService {
         UserDTO userDTO = userService.getUserById(reservation.get().getUserId());
         String userName = userDTO.getFirstName() + " " + userDTO.getLastName();
         return new ReservationDTO(reservation.get(),roomDTO,userName);
+    }
+
+    public List<ReservationDTO> findByUserId(String userId){
+        List<Reservation> reservations= reservationRepository.findAllByUserId(userId);
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            RoomDTO roomDTO = roomService.getRoomById(reservation.getRoomId());
+            UserDTO userDTO = userService.getUserById(reservation.getUserId());
+            String userName = userDTO.getFirstName() + " " + userDTO.getLastName();
+            ReservationDTO reservationDTO = new ReservationDTO(reservation, roomDTO, userName);
+            reservationDTOS.add(reservationDTO);
+
+        }
+        return reservationDTOS;
+    }
+
+    public List<ReservationDTO> findByRoomId(String roomId){
+        List<Reservation> reservations= reservationRepository.findAllByRoomId(roomId);
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            RoomDTO roomDTO = roomService.getRoomById(reservation.getRoomId());
+            UserDTO userDTO = userService.getUserById(reservation.getUserId());
+            String userName = userDTO.getFirstName() + " " + userDTO.getLastName();
+            ReservationDTO reservationDTO = new ReservationDTO(reservation, roomDTO, userName);
+            reservationDTOS.add(reservationDTO);
+
+        }
+        return reservationDTOS;
+    }
+
+    public List<ReservationDTO> findPastReservationsByUserId(String userId){
+        LocalDateTime date = LocalDateTime.now();
+        System.out.println("Service Date: "+  date);
+        List<Reservation> reservations = reservationRepository.findPastReservationsByUser(userId, date);
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            RoomDTO roomDTO = roomService.getRoomById(reservation.getRoomId());
+            UserDTO userDTO = userService.getUserById(reservation.getUserId());
+            String userName = userDTO.getFirstName() + " " + userDTO.getLastName();
+            ReservationDTO reservationDTO = new ReservationDTO(reservation, roomDTO, userName);
+            reservationDTOS.add(reservationDTO);
+
+        }
+        return reservationDTOS;
+    }
+
+
+
+    public List<ReservationDTO> findFutureReservationsByUserId(String userId){
+        LocalDateTime date = LocalDateTime.now();
+        List<Reservation> reservations = reservationRepository.findFutureReservationsByUser(userId, date);
+        List<ReservationDTO> reservationDTOS = new ArrayList<>();
+        for (Reservation reservation: reservations) {
+            RoomDTO roomDTO = roomService.getRoomById(reservation.getRoomId());
+            UserDTO userDTO = userService.getUserById(reservation.getUserId());
+            String userName = userDTO.getFirstName() + " " + userDTO.getLastName();
+            ReservationDTO reservationDTO = new ReservationDTO(reservation, roomDTO, userName);
+            reservationDTOS.add(reservationDTO);
+
+        }
+        return reservationDTOS;
+    }
+
+    public List<Reservation> findOccupiedRoomIds(LocalDateTime dateFrom, LocalDateTime dateTo){
+        return reservationRepository.findOccupiedRoomIdsInPeriod(dateFrom, dateTo);
     }
 
     public ReservationDTO addReservation(Reservation payload){
