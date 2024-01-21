@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reservations")
 @SecurityRequirement(name = "JWT Security")
-@CrossOrigin(origins = "http://localhost:3001", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "https://blissbooker-79e5fe9a02df.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 public class ReservationController {
     private final ReservationService reservationService;
 
