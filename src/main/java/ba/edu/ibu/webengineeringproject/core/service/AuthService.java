@@ -40,29 +40,39 @@ public class AuthService {
         return new UserDTO(user);
     }
 
+    public UserDTO getMe(String header) {
+        String userEmail = jwtService.extractUserName(header);
+        System.out.println("User Email: " + userEmail);
+
+        User user = userRepository.findByUsernameOrEmailAddress(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("This user does not exist."));
+
+        return new UserDTO(user);
+    }
+
     public LoginDTO signIn(LoginRequestDTO loginRequestDTO) {
         System.out.println(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword())
         );
-        System.out.println("EMail " + loginRequestDTO.getUsername());
+        System.out.println("EMail " + loginRequestDTO.getEmail());
         System.out.println("PW " + loginRequestDTO.getPassword());
 
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword())
+                    new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword())
             );
         } catch (BadCredentialsException e) {
             // Log or print exception details
             e.printStackTrace();
             throw e; // Rethrow the exception if needed
         }
-        System.out.println("Authentication successful for: " + loginRequestDTO.getUsername());
+        System.out.println("Authentication successful for: " + loginRequestDTO.getEmail());
 
-        User user = userRepository.findFirstByEmailAddress(loginRequestDTO.getUsername())
+        User user = userRepository.findFirstByEmailAddress(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("This user does not exist."));
         String jwt = jwtService.generateToken(user);
 
-        return new LoginDTO(jwt);
+        return new LoginDTO(jwt, new UserDTO(user));
     }
 
 }

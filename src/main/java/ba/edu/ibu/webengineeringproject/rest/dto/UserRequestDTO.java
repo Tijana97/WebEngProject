@@ -11,7 +11,6 @@ public class UserRequestDTO {
     private UserType userType;
     private String address;
     private String password;
-    private boolean isAuthorized;
 
     public  UserRequestDTO() { }
     public UserRequestDTO(User user) {
@@ -20,7 +19,6 @@ public class UserRequestDTO {
         this.username = user.getUsername();
         this.emailAddress = user.getEmailAddress();
         this.userType = user.getUserType();
-        this.isAuthorized = user.isAuthorized();
         this.address = user.getAddress();
         this.password = user.getPassword();
     }
@@ -33,7 +31,7 @@ public class UserRequestDTO {
         user.setUserType(userType);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
-        user.setAuthorized(isAuthorized);
+        user.setAuthorized(false);
         user.setPassword(password);
 
         return user;
@@ -95,11 +93,4 @@ public class UserRequestDTO {
         this.address = address;
     }
 
-    public boolean isAuthorized() {
-        return isAuthorized;
-    }
-
-    public void setAuthorized(boolean authorized) {
-        isAuthorized = authorized;
-    }
 }

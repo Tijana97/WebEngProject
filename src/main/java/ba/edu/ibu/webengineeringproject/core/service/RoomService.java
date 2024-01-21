@@ -46,6 +46,20 @@ public class RoomService {
         return roomDTOS;
     }
 
+    public List<RoomDTO> findRoomsBySearch(String search, LocalDateTime dateFrom, LocalDateTime dateTo, int capacity){
+        List<String> hotelIds = hotelService.findHotelsBySearch(search);
+        List<RoomDTO> rooms = new ArrayList<>();
+        for (String hotelId : hotelIds) {
+            List<RoomDTO> roomDTOS = findAvailableRoomsWithCapacityAndHotelId(dateFrom, dateTo, capacity, hotelId);
+            for (RoomDTO roomDTO: roomDTOS) {
+                if(!rooms.contains(roomDTO)){
+                    rooms.add(roomDTO);
+                }
+            }
+        }
+        return rooms;
+    }
+
     public List<RoomDTO> findAllByCapacity(int capacity){
         List<Room> rooms = roomRepository.findAllByCapacity(capacity);
         List<RoomDTO> roomDTOS = new ArrayList<>();
@@ -136,44 +150,44 @@ public class RoomService {
     public RoomDTO getRoomById(String id){
         Optional<Room> room = roomRepository.findById(id);
         if(room.isEmpty()){
-            throw  new ResourceNotFoundException("The room with the given ID does not exist.");
+        throw  new ResourceNotFoundException("The room with the given ID does not exist.");
         }
         HotelDTO hotelDTO = hotelService.getHotelById(room.get().getHotelId());
         return new RoomDTO(room.get(), hotelDTO);
-    }
+        }
 
-    public RoomDTO addRoom(Room payload){
+public RoomDTO addRoom(Room payload){
         Optional<Hotel> hotel = hotelRepository.findById(payload.getHotelId());
         if(hotel.isEmpty()){
-            throw new ResourceNotFoundException("The hotel with the given ID does not exist.");
+        throw new ResourceNotFoundException("The hotel with the given ID does not exist.");
         }
         Room room = roomRepository.save(payload);
         HotelDTO hotelDTO = hotelService.getHotelById(room.getHotelId());
         return  new RoomDTO(room, hotelDTO);
-    }
+        }
 
-    public RoomDTO updateRoom(String id, Room payload){
+public RoomDTO updateRoom(String id, Room payload){
         Optional<Room> room = roomRepository.findById(id);
         if(room.isEmpty()){
-            throw new ResourceNotFoundException("The room with the given ID does not exist.");
+        throw new ResourceNotFoundException("The room with the given ID does not exist.");
         }
         Optional<Hotel> hotel = hotelRepository.findById(payload.getHotelId());
         if(hotel.isEmpty()){
-            throw  new ResourceNotFoundException("The hotel with the given ID does not exist.");
+        throw  new ResourceNotFoundException("The hotel with the given ID does not exist.");
         }
         payload.setId(room.get().getId());
         Room updatedRoom = roomRepository.save(payload);
         HotelDTO hotelDTO = hotelService.getHotelById(updatedRoom.getHotelId());
         return new RoomDTO(updatedRoom, hotelDTO);
-    }
+        }
 
-    public void deleteRoom(String id){
+public void deleteRoom(String id){
         Optional<Room> room = roomRepository.findById(id);
         if(room.isEmpty()){
-            throw new ResourceNotFoundException("The room with the given ID does not exist.");
+        throw new ResourceNotFoundException("The room with the given ID does not exist.");
         }
         roomRepository.deleteById(id);
-    }
+        }
 
 
-}
+        }

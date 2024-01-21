@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3001", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
@@ -33,6 +34,13 @@ public class RoomController {
     @RequestMapping(method = RequestMethod.POST, path = "/new")
     public ResponseEntity<RoomDTO> registerRoom(@RequestBody Room room) {
         return ResponseEntity.ok(roomService.addRoom(room));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/search/{search}/{dateFrom}/{dateTo}/{capacity}")
+    public ResponseEntity<List<RoomDTO>> getRoomsBySearch(@PathVariable String search, @PathVariable String dateFrom, @PathVariable String dateTo, @PathVariable int capacity) {
+        LocalDateTime localDateFrom = LocalDateTime.parse(dateFrom, DateTimeFormatter.ISO_DATE_TIME);
+        LocalDateTime localDateTo = LocalDateTime.parse(dateTo, DateTimeFormatter.ISO_DATE_TIME);
+        return ResponseEntity.ok(roomService.findRoomsBySearch(search, localDateFrom, localDateTo, capacity));
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/room/{id}")
