@@ -8,7 +8,7 @@ import ba.edu.ibu.webengineeringproject.rest.dto.UserRequestDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://blissbooker-79e5fe9a02df.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "https://65ad855a7f6077a721dc046c--tangerine-haupia-e1cfff.netlify.app", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {

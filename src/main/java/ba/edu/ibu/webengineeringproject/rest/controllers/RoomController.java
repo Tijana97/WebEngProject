@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "https://blissbooker-79e5fe9a02df.herokuapp.com", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "https://65ad855a7f6077a721dc046c--tangerine-haupia-e1cfff.netlify.app", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
