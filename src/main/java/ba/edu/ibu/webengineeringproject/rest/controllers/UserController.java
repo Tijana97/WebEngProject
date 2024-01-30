@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://65ad855a7f6077a721dc046c--tangerine-haupia-e1cfff.netlify.app", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("api/users")
 @SecurityRequirement(name = "JWT Security")

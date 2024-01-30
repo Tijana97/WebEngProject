@@ -6,11 +6,9 @@ import ba.edu.ibu.webengineeringproject.rest.dto.LoginRequestDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserDTO;
 import ba.edu.ibu.webengineeringproject.rest.dto.UserRequestDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "https://65ad855a7f6077a721dc046c--tangerine-haupia-e1cfff.netlify.app", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 @RestController
 @RequestMapping("api/auth")
 public class AuthController {
@@ -18,6 +16,15 @@ public class AuthController {
 
     public AuthController(AuthService authService) {
         this.authService = authService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/get-me")
+    public ResponseEntity<UserDTO> getMe(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+            return ResponseEntity.internalServerError().body(null);
+        }
+
+        return ResponseEntity.ok(authService.getMe(authorizationHeader));
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/register")

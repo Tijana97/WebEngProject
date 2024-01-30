@@ -1,20 +1,20 @@
 package ba.edu.ibu.webengineeringproject.rest.dto;
 
 public class LoginRequestDTO {
-    private String username;
+    private String email;
     private String password;
 
     public LoginRequestDTO(String email, String password) {
-        this.username = email;
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String email) {
-        this.username = email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

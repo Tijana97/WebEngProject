@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reservations")
 @SecurityRequirement(name = "JWT Security")
+@CrossOrigin(origins = "https://65ad855a7f6077a721dc046c--tangerine-haupia-e1cfff.netlify.app", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS })
 public class ReservationController {
     private final ReservationService reservationService;
 

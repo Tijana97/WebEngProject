@@ -41,6 +41,23 @@ public class HotelService {
         return hotelDTOS;
     }
 
+    public  List<String> findHotelsBySearch(String search){
+        List<Hotel> hotelsByName = hotelRepository.findAllByName(search);
+        List<Hotel> hotelsByCity = hotelRepository.findByCity(search);
+
+        for (Hotel hotel : hotelsByName) {
+            if(!hotelsByCity.contains(hotel)){
+                hotelsByCity.add(hotel);
+            }
+        }
+        List<String> hotelIds = new ArrayList<>();
+        for (Hotel hotel: hotelsByCity) {
+            hotelIds.add(hotel.getId());
+        }
+
+        return hotelIds;
+    }
+
     public HotelDTO getHotelById(String id){
         Optional<Hotel> hotel = hotelRepository.findById(id);
         if(hotel.isPresent()){
